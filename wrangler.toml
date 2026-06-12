@@ -1,0 +1,26 @@
+name = "ecliptix-web"
+main = "worker/index.ts"
+compatibility_date = "2024-12-18"
+compatibility_flags = ["nodejs_compat"]
+
+# Serve the built React SPA from dist/ alongside the Worker. The Worker handles
+# /api/* and /v1/* routes; everything else falls back to the SPA (index.html).
+assets = { directory = "./dist", binding = "ASSETS", not_found_handling = "single-page-application" }
+
+# D1: registry database (accounts, users, sessions, packages, versions, tokens).
+[[d1_databases]]
+binding = "DB"
+database_name = "ecliptix-registry"
+database_id = "2722a8b7-37ea-4559-9fbc-7cfe29a4d3fa"
+migrations_dir = "migrations"
+
+# R2: package source tarball storage.
+[[r2_buckets]]
+binding = "PACKAGES"
+bucket_name = "ecliptix-packages"
+
+[vars]
+# Public registry display name. Secrets (SESSION_SECRET) are set via
+# `wrangler secret put SESSION_SECRET`.
+REGISTRY_NAME = "Insty Registry"
+MAX_PACKAGE_BYTES = "52428800"

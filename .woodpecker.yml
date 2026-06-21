@@ -1,0 +1,20 @@
+# Woodpecker CI pipeline for the Insty Web registry (Cloudflare Worker + React SPA).
+
+steps:
+  - name: install
+    image: node:22
+    commands:
+      - corepack enable
+      - pnpm install --frozen-lockfile
+
+  - name: typecheck
+    image: node:22
+    commands:
+      - corepack enable
+      - pnpm run typecheck
+
+  - name: build
+    image: node:22
+    commands:
+      - corepack enable
+      - pnpm run build
